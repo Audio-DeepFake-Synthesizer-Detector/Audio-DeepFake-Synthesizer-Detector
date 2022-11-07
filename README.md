@@ -1,1 +1,1 @@
-# Audio-DeepFake-Synthesizer-Detector
+# Audio DeepFake Synthesizer Detector
