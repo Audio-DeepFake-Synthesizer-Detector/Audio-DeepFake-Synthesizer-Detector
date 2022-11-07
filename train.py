@@ -74,7 +74,7 @@ def features_extractor(file):
 
 extracted_audio_features=[]
 for index_num,row in tqdm(audio_data.iterrows()):
-    file_name = os.path.join(os.path.abspath('./AudioData/ProvaVere'),str(row["Filename"]) +'.flac')#MODIFY
+    file_name = os.path.join(os.path.abspath('./AudioData/TempleTrue'),str(row["Filename"]) +'.flac')#MODIFY
     file_exists = os.path.exists(file_name)
 
     if file_exists:
@@ -101,7 +101,7 @@ def features_extractor(file):
     return mfccs_scaled_features
 
 for index_num,row in tqdm(audio_data.iterrows()):
-    file_name = os.path.join(os.path.abspath('./AudioData/ProvaFake'),str(row["Filename"]) +'.flac')#MODIFY
+    file_name = os.path.join(os.path.abspath('./AudioData/TempleFake'),str(row["Filename"]) +'.flac')#MODIFY
     file_exists = os.path.exists(file_name)
 
     if file_exists:
