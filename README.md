@@ -1,2 +1,2 @@
 # Audio DeepFake Synthesizer Detector
-marco & Giorgio
+Marco & Giorgio
