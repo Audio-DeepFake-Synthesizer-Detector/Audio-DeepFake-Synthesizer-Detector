@@ -28,6 +28,7 @@ audio_data = pd.read_csv("ASVspoof2019.LA.cm.eval.trl.txt", sep = " ", names = (
 #print(audio_data)
 
 
+
 #print(audio_data['Class'].value_counts())
 
 
