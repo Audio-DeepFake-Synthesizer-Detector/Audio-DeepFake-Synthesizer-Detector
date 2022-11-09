@@ -47,7 +47,16 @@ with open("./Extracted_Features.txt","rb") as binary_file:
   extracted_audio_features_df=pickle.load(binary_file)
 binary_file.close()
 
+X=np.array(extracted_audio_features_df['feature'].tolist())
+y=np.array(extracted_audio_features_df['class'].tolist())
 
+
+labelencoder=LabelEncoder()
+y=to_categorical(labelencoder.fit_transform(y))
+
+
+X_train,X_test,y_train,y_test=train_test_split(X,y,test_size=0.2,random_state=0)
+X_train,X_val,y_train,y_val=train_test_split(X_train,y_train,test_size=0.2,random_state=0)
 #Model Training information
 
 rmsprop = RMSprop(learning_rate=0.001)
@@ -169,7 +178,7 @@ print('Loss = ',test_accuracy[0])
 tf.keras.models.save_model(model,keras_file)
 
 ##Testing the model
-audio_file = 'RECORD.flac'
+audio_file = 'record2.flac'
 
 audio, sample_rate = librosa.load(audio_file, res_type='kaiser_fast') 
 mfccs_features = librosa.feature.mfcc(y=audio, sr=sample_rate, n_mfcc=40)
