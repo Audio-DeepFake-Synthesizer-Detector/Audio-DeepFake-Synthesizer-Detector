@@ -75,12 +75,20 @@ for file in fake_voice:
 
 
 ##for real data
-def features_extractor(file):
+def features_extractor(file_name):
     audio, sample_rate = librosa.load(file_name, res_type='kaiser_fast') 
     mfccs_features = librosa.feature.mfcc(y=audio, sr=sample_rate, n_mfcc=40)
     mfccs_scaled_features = np.mean(mfccs_features.T,axis=0)
     
     return mfccs_scaled_features
+
+print("----------------------")
+print(features_extractor("./AudioData/TrueTemplate/sample-000002.mp3"))
+print("----------------------")
+print(features_extractor("./AudioData/TrueTemplate/00 - TrueTemplate - sample-000002.flac"))
+print("----------------------")
+
+print(features_extractor("./AudioData/TrueTemplate/sample-000002.mp3") == features_extractor("./AudioData/TrueTemplate/00 - TrueTemplate - sample-000002.flac"))
 
 extracted_audio_features=[]
 for index_num,row in tqdm(audio_data.iterrows()):
@@ -100,7 +108,7 @@ extracted_audio_features_df=pd.DataFrame(extracted_audio_features,columns=['feat
 
 ##for fake data
 
-def features_extractor(file):
+def features_extractor(file_name):
     audio, sample_rate = librosa.load(file_name, res_type='kaiser_fast') 
     mfccs_features = librosa.feature.mfcc(y=audio, sr=sample_rate, n_mfcc=40)
     mfccs_scaled_features = np.mean(mfccs_features.T,axis=0)
@@ -145,7 +153,7 @@ with open("./Extracted_Features.txt","rb") as binary_file:
 binary_file.close()
 
 
-#Model Training information
+#Model Training information    
 
 rmsprop = RMSprop(learning_rate=0.001)
 
