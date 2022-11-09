@@ -41,41 +41,13 @@ from tensorflow.keras.optimizers import RMSprop
 from sklearn.model_selection import train_test_split
 
 audio_data = pd.read_csv(r"ASVspoof2019.LA.cm.eval.trl.txt", sep = " ", names = ('Id','Filename','a','FakeType','Class'))
-audio_data_frame = audio_data[audio_data['FakeType'] == '-']
-
-'''
-#INSERT THE FILES IN THE SPECIF FOLDER
-
-Path('AudioData/Human_voice').mkdir(parents = True ,exist_ok = True)
-real_voice = audio_data_frame['Filename']
-
-for file in real_voice:
-  fileName = os.path.join('./LA/ASVspoof2019_LA_eval/flac/',file +'.flac')
-  if os.path.isfile(fileName):
-    copy(fileName,'AudioData/Human_voice')
-
-
-audio_data_frame = audio_data[audio_data['FakeType'] != '-']
-print(audio_data_frame.shape)
-
-
-Path('AudioData/Generated_voice').mkdir(parents = True ,exist_ok = True)
-fake_voice = audio_data_frame['Filename']
-
-for file in fake_voice:
-  fileName = os.path.join('./LA/ASVspoof2019_LA_eval/flac/',file +'.flac')
-  if os.path.isfile(fileName):
-    copy(fileName,'AudioData/Generated_voice')
-    '''
+print(audio_data)
 
 
 ##EXTRACT THE FEATURES FROM FILE
 
-
-
-
 ##for real data
-def features_extractor(file):
+def features_extractor(file_name):
     audio, sample_rate = librosa.load(file_name, res_type='kaiser_fast') 
     mfccs_features = librosa.feature.mfcc(y=audio, sr=sample_rate, n_mfcc=40)
     mfccs_scaled_features = np.mean(mfccs_features.T,axis=0)
@@ -84,7 +56,7 @@ def features_extractor(file):
 
 extracted_audio_features=[]
 for index_num,row in tqdm(audio_data.iterrows()):
-    file_name = os.path.join(os.path.abspath(r'C:\Users\marco\OneDrive\Desktop\progettoCyber\Deepfake-Audio-Detection-main\AudioData\Human_voice'),str(row["Filename"]) +'.flac')#MODIFY
+    file_name = os.path.join(os.path.abspath(r'.\..\..\progettoCyber\Deepfake-Audio-Detection-main\AudioData\Human_voice'),str(row["Filename"]) +'.flac')#MODIFY
     file_exists = os.path.exists(file_name)
 
     if file_exists:
@@ -100,15 +72,8 @@ extracted_audio_features_df=pd.DataFrame(extracted_audio_features,columns=['feat
 
 ##for fake data
 
-def features_extractor(file):
-    audio, sample_rate = librosa.load(file_name, res_type='kaiser_fast') 
-    mfccs_features = librosa.feature.mfcc(y=audio, sr=sample_rate, n_mfcc=40)
-    mfccs_scaled_features = np.mean(mfccs_features.T,axis=0)
-    
-    return mfccs_scaled_features
-
 for index_num,row in tqdm(audio_data.iterrows()):
-    file_name = os.path.join(os.path.abspath(r'C:\Users\marco\OneDrive\Desktop\progettoCyber\Deepfake-Audio-Detection-main\AudioData\Generated_voice'),str(row["Filename"]) +'.flac')#MODIFY
+    file_name = os.path.join(os.path.abspath(r'.\..\..\progettoCyber\Deepfake-Audio-Detection-main\AudioData\Generated_voice'),str(row["Filename"]) +'.flac')#MODIFY
     file_exists = os.path.exists(file_name)
 
     if file_exists:
@@ -121,16 +86,7 @@ for index_num,row in tqdm(audio_data.iterrows()):
 
 
 extracted_audio_features_df=pd.DataFrame(extracted_audio_features,columns=['feature','class'])
-X=np.array(extracted_audio_features_df['feature'].tolist())
-y=np.array(extracted_audio_features_df['class'].tolist())
 
-
-labelencoder=LabelEncoder()
-y=to_categorical(labelencoder.fit_transform(y))
-
-
-X_train,X_test,y_train,y_test=train_test_split(X,y,test_size=0.2,random_state=0)
-X_train,X_val,y_train,y_val=train_test_split(X_train,y_train,test_size=0.2,random_state=0)
 
 
 #Saving Extracted_Features to file
