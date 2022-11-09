@@ -23,18 +23,26 @@ from tensorflow.keras.layers import BatchNormalization
 from tensorflow.keras.callbacks import ReduceLROnPlateau, EarlyStopping
 from sklearn import metrics
 from tensorflow.keras.callbacks import ModelCheckpoint
+from tqdm import tqdm
+import os.path
+from tensorflow.keras.utils import to_categorical
+from sklearn.preprocessing import LabelEncoder
+from sklearn.model_selection import train_test_split
+from tensorflow.keras.models import Sequential
+from tensorflow.keras.layers import Dense,Dropout,Activation,Flatten
+from tensorflow.keras.optimizers import Adam
+from sklearn import metrics
+from tensorflow.keras.applications.inception_v3 import InceptionV3
+from tensorflow.keras.layers import Dense, GlobalAveragePooling2D
+from tensorflow.keras.models import Model
+from tensorflow.keras.applications.mobilenet_v2 import MobileNetV2
+from tensorflow.keras.models import Model
+from tensorflow.keras.optimizers import RMSprop
+from sklearn.model_selection import train_test_split
 
-audio_data = pd.read_csv(r"C:\Users\marco\OneDrive\Desktop\progettoCyber\Deepfake-Audio-Detection-main\ASVspoof2019.LA.cm.eval.trl.txt", sep = " ", names = ('Id','Filename','a','FakeType','Class'))
-#print(audio_data)
-
-
-
-#print(audio_data['Class'].value_counts())
-
-
-
+audio_data = pd.read_csv(r"ASVspoof2019.LA.cm.eval.trl.txt", sep = " ", names = ('Id','Filename','a','FakeType','Class'))
 audio_data_frame = audio_data[audio_data['FakeType'] == '-']
-#print(audio_data_frame.shape)
+
 '''
 #INSERT THE FILES IN THE SPECIF FOLDER
 
@@ -63,8 +71,9 @@ for file in fake_voice:
 
 ##EXTRACT THE FEATURES FROM FILE
 
-from tqdm import tqdm
-import os.path
+
+
+
 ##for real data
 def features_extractor(file):
     audio, sample_rate = librosa.load(file_name, res_type='kaiser_fast') 
@@ -91,9 +100,6 @@ extracted_audio_features_df=pd.DataFrame(extracted_audio_features,columns=['feat
 
 ##for fake data
 
-from tqdm import tqdm
-import os.path
-
 def features_extractor(file):
     audio, sample_rate = librosa.load(file_name, res_type='kaiser_fast') 
     mfccs_features = librosa.feature.mfcc(y=audio, sr=sample_rate, n_mfcc=40)
@@ -115,84 +121,32 @@ for index_num,row in tqdm(audio_data.iterrows()):
 
 
 extracted_audio_features_df=pd.DataFrame(extracted_audio_features,columns=['feature','class'])
-#print("EXTRACTED FEATURE SHAPE \n\n\n")
-#print(extracted_audio_features_df.shape)
-
-#print(extracted_audio_features_df)
-
-
-
-
-'''extracted_audio_features_df = pd.read_csv('./Extracted_Features.csv', sep = ",", names = ('feature','class'))
-extracted_audio_features_df=extracted_audio_features_df
-print(extracted_audio_features_df)'''
-
-
-'''extracted_audio_features_df = pd.read_csv('./Extracted_Features.csv', sep = ",", names = ('feature','class'))
-print("GIORGIO\n\n")
-print(extracted_audio_features_df)'''
 X=np.array(extracted_audio_features_df['feature'].tolist())
 y=np.array(extracted_audio_features_df['class'].tolist())
 
-from tensorflow.keras.utils import to_categorical
-from sklearn.preprocessing import LabelEncoder
+
 labelencoder=LabelEncoder()
 y=to_categorical(labelencoder.fit_transform(y))
 
-from sklearn.model_selection import train_test_split
+
 X_train,X_test,y_train,y_test=train_test_split(X,y,test_size=0.2,random_state=0)
+X_train,X_val,y_train,y_val=train_test_split(X_train,y_train,test_size=0.2,random_state=0)
 
-print("Dati NON presi da file\n\n\n")
 
+#Saving Extracted_Features to file
 with open("./Extracted_Features.txt","wb") as binary_file:
   pickle.dump(extracted_audio_features_df,binary_file)
-#extracted_audio_features_df.to_csv(r'./Extracted_Features.csv', index=False)
 
-print("VALORI IN INPUT\n\n")
-print(str(X))
-print(str(y))
-print(str(X_train))
-print(str(y_train))
 
-print("\n\n\nSHAPE\n\n")
-print(X.shape)
-print(y.shape)
-print(X_train.shape)
-print(y_train.shape)
-
-print("Dati NON presi da file\n\n\n")
-
+#Retrieving Extracted_features from file
 #VERSION LECTURE FROM BYTE FILE
 with open("./Extracted_Features.txt","rb") as binary_file:
   extracted_audio_features_df=pickle.load(binary_file)
 binary_file.close()
 
-from sklearn.model_selection import train_test_split
-X_train,X_val,y_train,y_val=train_test_split(X_train,y_train,test_size=0.2,random_state=0)
-print("VALORI IN INPUT\n\n")
-print(str(X))
-print(str(y))
-print(str(X_train))
-print(str(y_train))
 
-print("\n\n\nSHAPE\n\n")
-print(X.shape)
-print(y.shape)
-print(X_train.shape)
-print(y_train.shape)
+#Model Training information
 
-
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense,Dropout,Activation,Flatten
-from tensorflow.keras.optimizers import Adam
-from sklearn import metrics
-from tensorflow.keras.applications.inception_v3 import InceptionV3
-from tensorflow.keras.layers import Dense, GlobalAveragePooling2D
-from tensorflow.keras.models import Model
-from tensorflow.keras.applications.mobilenet_v2 import MobileNetV2
-from tensorflow.keras.models import Model
-
-from tensorflow.keras.optimizers import RMSprop
 rmsprop = RMSprop(learning_rate=0.001)
 
 model=Sequential()
@@ -218,7 +172,7 @@ model.add(BatchNormalization())
 model.add(Dropout(0.5))
 model.add(Dense(2, activation='softmax'))
 
-model.compile(loss='categorical_crossentropy',metrics=['accuracy'],optimizer='adam')
+model.compile(loss='sparse_categorical_crossentropy',metrics=['accuracy'],optimizer='adam')
 model.summary()
 
 earlystop = EarlyStopping(patience=10)
