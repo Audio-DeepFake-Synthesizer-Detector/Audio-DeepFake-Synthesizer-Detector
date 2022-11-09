@@ -24,7 +24,7 @@ from tensorflow.keras.callbacks import ReduceLROnPlateau, EarlyStopping
 from sklearn import metrics
 from tensorflow.keras.callbacks import ModelCheckpoint
 
-audio_data = pd.read_csv("ASVspoof2019.LA.cm.eval.trl.txt", sep = " ", names = ('Id','Filename','a','FakeType','Class'))
+audio_data = pd.read_csv(r"C:\Users\marco\OneDrive\Desktop\progettoCyber\Deepfake-Audio-Detection-main\ASVspoof2019.LA.cm.eval.trl.txt", sep = " ", names = ('Id','Filename','a','FakeType','Class'))
 #print(audio_data)
 
 
