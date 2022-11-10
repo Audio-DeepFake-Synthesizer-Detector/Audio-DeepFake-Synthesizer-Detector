@@ -39,13 +39,40 @@ from tensorflow.keras.applications.mobilenet_v2 import MobileNetV2
 from tensorflow.keras.models import Model
 from tensorflow.keras.optimizers import RMSprop
 from sklearn.model_selection import train_test_split
+'''
+audio_data = pd.read_csv(r"ASVspoof2019.LA.cm.train.trn.txt", sep = " ", names = ('Id','Filename','a','FakeType','Class'))
+audio_data_frame = audio_data[audio_data['FakeType'] == '-']
 
-audio_data = pd.read_csv(r"ASVspoof2019.LA.cm.eval.trl.txt", sep = " ", names = ('Id','Filename','a','FakeType','Class'))
-print(audio_data)
+
+#INSERT THE FILES IN THE SPECIF FOLDER
+
+Path('AudioData/Human_voice').mkdir(parents = True ,exist_ok = True)
+real_voice = audio_data_frame['Filename']
+
+for file in real_voice:
+  fileName = os.path.join('C:/Users/marco/OneDrive/Desktop/progettoCyber/Deepfake-Audio-Detection-main/LA/ASVspoof2019_LA_train/flac/',file +'.flac')
+  if os.path.isfile(fileName):
+    copy(fileName,'AudioData/Human_voice')
+
+
+audio_data_frame = audio_data[audio_data['FakeType'] != '-']
+print(audio_data_frame.shape)
+
+
+Path('AudioData/Generated_voice').mkdir(parents = True ,exist_ok = True)
+fake_voice = audio_data_frame['Filename']
+count=0
+for file in fake_voice:
+  fileName = os.path.join('C:/Users/marco/OneDrive/Desktop/progettoCyber/Deepfake-Audio-Detection-main/LA/ASVspoof2019_LA_train/flac/',file +'.flac')
+  if os.path.isfile(fileName):
+    copy(fileName,'AudioData/Generated_voice')
+    count=count+1
+    if count==12483:
+      break'''
 
 
 ##EXTRACT THE FEATURES FROM FILE
-
+directoryRealData=os.path.abspath(r".\..\..\progettoCyber\Deepfake-Audio-Detection-main\AudioData\Human_voice")
 ##for real data
 def features_extractor(file_name):
     audio, sample_rate = librosa.load(file_name, res_type='kaiser_fast') 
@@ -55,33 +82,21 @@ def features_extractor(file_name):
     return mfccs_scaled_features
 
 extracted_audio_features=[]
-for index_num,row in tqdm(audio_data.iterrows()):
-    file_name = os.path.join(os.path.abspath(r'.\..\..\progettoCyber\Deepfake-Audio-Detection-main\AudioData\Human_voice'),str(row["Filename"]) +'.flac')#MODIFY
-    file_exists = os.path.exists(file_name)
-
-    if file_exists:
-      final_class_labels=row["Class"]
-      data=features_extractor(file_name)
+for filename in os.listdir(directoryRealData):
+      final_class_labels="bonafide"
+      data=features_extractor(directoryRealData+"\\"+filename)
       extracted_audio_features.append([data,final_class_labels])
-    else:
-      continue
 
 
  
-extracted_audio_features_df=pd.DataFrame(extracted_audio_features,columns=['feature','class'])
+#extracted_audio_features_df=pd.DataFrame(extracted_audio_features,columns=['feature','class'])
 
 ##for fake data
-
-for index_num,row in tqdm(audio_data.iterrows()):
-    file_name = os.path.join(os.path.abspath(r'.\..\..\progettoCyber\Deepfake-Audio-Detection-main\AudioData\Generated_voice'),str(row["Filename"]) +'.flac')#MODIFY
-    file_exists = os.path.exists(file_name)
-
-    if file_exists:
-      final_class_labels=row["Class"]
-      data=features_extractor(file_name)
+directoryFakeData=os.path.abspath(r".\..\..\progettoCyber\Deepfake-Audio-Detection-main\AudioData\Generated_voice")
+for filename in os.listdir(directoryRealData):
+      final_class_labels="spoof"
+      data=features_extractor(filename)
       extracted_audio_features.append([data,final_class_labels])
-    else:
-      continue
 
 
 
