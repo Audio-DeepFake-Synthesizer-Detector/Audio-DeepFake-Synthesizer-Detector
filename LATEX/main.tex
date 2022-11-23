@@ -6,6 +6,9 @@
 
 \documentclass[12pt, a4paper]{article}
 \usepackage[pdftex]{graphicx} %for embedding images
+\usepackage{wrapfig}
+\usepackage{hyperref}
+\usepackage[font=scriptsize]{caption}
 \usepackage{url} %for proper url entries
 % \usepackage[bookmarks, colorlinks=false, pdfborder={0 0 0}, pdftitle={<pdf title here>}, pdfauthor={<author's name here>}, pdfsubject={<subject here>}, pdfkeywords={<keywords here>}]{hyperref} %for creating links in the pdf version and other additional pdf attributes, no effect on the printed document
 %\usepackage[final]{pdfpages} %for embedding another pdf, remove if not required
@@ -40,5 +43,34 @@ Il documento è diviso in tre sezioni sintetizzati come di seguito:
 
 
 \pagenumbering{arabic} %reset numbering to normal for the main content
+
+
+\newpage
+\section{Usi e abusi del Deepfake}
+%Descrizione deepfake
+Il termine deepfake è utilizzato per indicare una riproduzione digitale (foto, video, audio), estremamente realistica, di una persona, animale, macchina o oggetto animato creata al fine di ingannare il fruitore rappresentando una realtà falsa costruita artificialmente.\\\\
+%Origine del termine e settori
+La parola deepfake è stata utilizzata per la prima volta nel 2017 da un utente di Reddit per riferirsi al software, da lui utilizzato, per creare filmati che partendo da video esistenti a sfondo sessuale andavano a modificare il volto dell'attrice con quello di una celebrità\cite{OrigineDeepfake}. 
+\\
+\begin{wrapfigure}{l}{0.35\textwidth}
+\includegraphics[width=1\linewidth]{Luke}
+\caption{Frame del film "The Book of Boba Fett" rappresentante una riproduzione deepfake dell'attore Mark Hamill nelle vesti del giovane Luke Skywalker}
+\label{fig:wrapfig}
+\end{wrapfigure}
+Da allora il termine deepfake si è evoluto e ha anche assunto una parziale accezione positiva. Infatti, grazie a questa tecnologia è possibile creare materiale a supporto di numerosi nobili settori, come ad esempio quello medico, cinematografico ed educativo.\cite{LukeDeepfake}\\
+Un altro esempio rilevante può essere l'assistenza alle persone che, in seguito alla perdita di un proprio caro, possono giovare di queste riproduzioni per aiutarle a superare il loro trauma\cite{SuperareTrauma}.
+\\\\
+%Problemi sociale correlati al deepfake
+Purtroppo però, la stragrande maggioranza dei deepfake sono utilizzati in maniera dannosa, con lo scopo di screditare un personaggio pubblico, di mortificare e umiliare un individuo (solitamente tramite video pornografici che colpiscono maggiormente target femminili) o deviare l'opinione pubblica verso un determinato obiettivo in maniera similare a quanto avviene con le fakenews.
+\\
+Un possibile esempio di come questi utilizzi possano diventare di importanza nazionale è quanto accaduto nel 2019 alla allora "house speaker" Nancy Pelosi, dove un video di questo tipo la ritraeva visibilmente alterata come se fosse in preda ai fumi dell'alcol\cite{FakeVideoNancyPelosi}.
+\\\\%conclusione capitolo
+Appare evidente come un utilizzo scorretto di queste tecnologie possa provocare ingenti danni economici e sociali alla collettività. Risulta quindi imperativa una maggiore attenzione da parte del governo e dell'opinione pubblica sull'argomento, al fine di sensibilizzare la popolazione e le aziende del settore in modo da per poter combattere efficacemente questa crescente piaga.
+
+
+
+\newpage
+\bibliographystyle{unsrt}
+\bibliography{bibliography}
 
 \end{document}
