@@ -71,17 +71,36 @@ Appare evidente come un utilizzo scorretto di queste tecnologie possa provocare 
 
 \newpage
 
-\section{How can we detect a deepfake?}
+\section{Come possiamo individuare un deepfake?}
 %Tecniche per riconoscerli da un punto di vista umano/sociale
 In questo capitolo verranno trattate le tecniche che possono essere usate per distinguere un video genuino da uno fasullo.\\ La prima categoria riguarda le metodologie basate sul riconoscimento di difetti e pattern comuni ai video deepfake.\\\\
 Ad esempio una caratteristica comune ai suddetti video è la gestione innaturale degli occhi. Infatti, i soggetti sbattono le palpebre troppo spesso o troppo di rado o in casi estremi non le sbattono affatto.\\
 Questo e altri simili problemi possono essere utili ad individuare riproduzioni sbrigative o poco curate. Purtroppo quelle di ultima generazione non presentano più queste problematiche ed è quindi necessario affidarsi a strumenti più sofisticati per raggiungere lo scopo.\\\\
 %Tecniche per riconoscerli da un punto di vista scientifico
-Tramite l'utilizzo di tecniche basate su machine learning e intelligenza atificiale è possibile realizzare modelli in grado di individuare, con un certo grado di attendibilità, la maggior parte delle riproduzioni deepfake. Ultimamente, però, sono emerse nuove metodologie in grado di ingannare questi strumenti.\\
-Un celebre esempio è GANs, una rete neurale in grado di riconoscere automaticamente delle possibili falle e migliorar la generazione del deepfake attraverso molteplici round, rendendo estremamente difficili l'individuazione da parte di software appositi.\\\\
-
+Tramite l'utilizzo di tecniche basate su machine learning e intelligenza artificiale è possibile realizzare modelli in grado di individuare, con un certo grado di attendibilità, la maggior parte delle riproduzioni deepfake. Ultimamente, però, sono emerse nuove metodologie in grado di ingannare questi strumenti.\\
+Un celebre esempio è GANs, una rete neurale in grado di riconoscere automaticamente le possibili falle e migliorare la generazione del deepfake attraverso molteplici round, rendendo estremamente difficili l'individuazione da parte di software appositi.\\\\
 %Caso di studio(Minerva, Intel, Who are you...)
-%foto e casi di studi
+Ovviamente anche gli esperti di cybersecurity hanno migliorato i propri sistemi, attraverso nuove tecniche che vanno a concentrarsi su parametri più specifici e precisi che attualmente risultano estremamente complessi da emulare.\\
+\begin{wrapfigure}{l}{0.55 \textwidth}
+\includegraphics[width=1\linewidth]{waveform.png}
+\caption{L'encoder incapsula l'audio del soggetto, il sintetizzatore crea uno spettrogramma perla frase obbiettivo usando l'incapsulamento precedente e il vocoder converte lo spettrogramma nella forma d'onda sintetica.}
+\label{fig2:wrapfig}
+\end{wrapfigure}
+Un esempio virtuoso è il software sviluppato dai ricercatori dell'università della Florida, Gainesville in grado di riconoscere i deepfake audio utilizzando una tecnica basata sull'analisi dell' impronta generata dalle corde vocali \cite{280020}. \\\\\\
+Un'altra interessante tecnologia è quella sviluppata da Intel, in grado di individuare i deepfake video tramite deep-learning e lo studio dei flussi sanguigni attraverso i vasi della testa.\\
+Intel dichiara un'accuratezza di individuazione del 96\% e promette di generare un risultato in pochi millisecondi, rendendo il servizio utilizzabile anche per l'analisi real-time di un video.\cite{DBLP:journals/corr/abs-1901-02212} \\\\
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=1\textwidth]{bloodDetector.png}
+    \caption{Partendo da una coppia reale e fake di frame(a) sono stati estratti segnali biologici (c) da diverse regioni facciali (b). Sono state applicate transformazioni (d) per calcolare coerenza spaizale e consistenza temporale, catturando segnali caratteristici(e) in un set di label e PPG maps e utilizzandoli per addestrare modelli di apprendimento SVM (f) e CNN (g). Infine vengono calcolate le probabilità (h) per stabilire l'autenticità dei frame iniziali (a). }
+    \label{fig:mesh1}
+
+\end{figure} \\
+Purtroppo questi software non sono stati ancora resi disponibili e risultano impossibili da testare. Per questo motivo nel prossimo capitolo verrà trattato il nostro personale approccio a questa problematica.
+
+
+
+
 \newpage
 \bibliographystyle{unsrt}
 \bibliography{bibliography}
