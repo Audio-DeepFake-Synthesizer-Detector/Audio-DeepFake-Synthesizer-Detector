@@ -5,6 +5,17 @@
 
 
 \documentclass[12pt, a4paper]{article}
+\usepackage{listings}
+\usepackage[newfloat]{minted}
+\usepackage{caption}
+\newminted{python}{
+\fontsize{9pt}
+%
+    % options to customize output of pythoncode
+    % see section 5.3 Available options starting at page 16
+}
+
+\usepackage{xurl}
 \usepackage[pdftex]{graphicx} %for embedding images
 \usepackage{wrapfig}
 \usepackage{hyperref}
@@ -87,6 +98,7 @@ Ovviamente anche gli esperti di cybersecurity hanno migliorato i propri sistemi,
 \label{fig2:wrapfig}
 \end{wrapfigure}
 Un esempio virtuoso è il software sviluppato dai ricercatori dell'università della Florida, Gainesville in grado di riconoscere i deepfake audio utilizzando una tecnica basata sull'analisi dell' impronta generata dalle corde vocali \cite{280020}. \\\\\\
+\newpage
 Un'altra interessante tecnologia è quella sviluppata da Intel, in grado di individuare i deepfake video tramite deep-learning e lo studio dei flussi sanguigni attraverso i vasi della testa.\\
 Intel dichiara un'accuratezza di individuazione del 96\% e promette di generare un risultato in pochi millisecondi, rendendo il servizio utilizzabile anche per l'analisi real-time di un video.\cite{DBLP:journals/corr/abs-1901-02212} \\\\
 \begin{figure}[h]
@@ -97,8 +109,36 @@ Intel dichiara un'accuratezza di individuazione del 96\% e promette di generare 
 
 \end{figure} \\
 Purtroppo questi software non sono stati ancora resi disponibili e risultano impossibili da testare. Per questo motivo nel prossimo capitolo verrà trattato il nostro personale approccio a questa problematica.
+\newpage
+\section{Il nostro modello per il deepfake's audio detection}
+In questo capitolo verrà presentato il nostro modello di individuazione degli audio deepfake basato su une rete neurale convoluzionale. \\
+Per le motivazioni trattate nel precedente capitolo abbiamo deciso di sviluppare uno strumento che ci permettesse di effettuare test personalizzati approfondendo la problematica da un punto di vista più pratico.\\
+A tal fine abbiamo addestrato una rete neurale convoluzionale. Questa tecnologia emulando il funzionamento del nostro cervello e partendo da una base di dati riesce attraverso diversi livelli a predire un risultato. \\\\
+Per quanto riguarda la base di dati ci siamo affidati ai dataset di ASVspoof per gli audio fake \cite{FakeAudioDataset} e a Common Voice per gli audio genuini \cite{RealAudioDataset}.
+Per poter utilizzare questi file è stato necessario estrarre dagli audio i coefficienti Mel-frequency cestral (rappresentazione spettro di potenza a breve termine di un suono)\\
 
 
+
+\begin{code}
+\captionof*{code}{Procedura di estrazione MFCC}
+\label{code:python-code}
+\begin{pythoncode}{c}
+def features_extractor(file_name):
+    audio, sample_rate = librosa.load(file_name, res_type= 'kaiser_fast') 
+    mfccs_features = librosa.feature.mfcc(y=audio, sr=sample_rate, n_mfcc=40)
+    mfccs_scaled_features = np.mean(mfccs_features.T,axis=0) 
+    return mfccs_scaled_features  
+\end{pythoncode}
+\end{code}
+
+\begin{figure}[h]
+    \centering
+    \includegraphics[width=0.7\textwidth]{librosa-feature-mfcc-1_00.png}
+    \caption{Esempio di spettrogramma MEl e relativo MFCC }
+\end{figure} 
+\newpage
+
+% addestramento rete, parametri importanti, foto risultati e prestazioni ottenute 
 
 
 \newpage
