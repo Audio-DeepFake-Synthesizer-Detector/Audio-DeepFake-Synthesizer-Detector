@@ -39,6 +39,7 @@ from tensorflow.keras.applications.mobilenet_v2 import MobileNetV2
 from tensorflow.keras.models import Model
 from tensorflow.keras.optimizers import RMSprop
 from sklearn.model_selection import train_test_split
+from keras.utils.vis_utils import plot_model
 
 
 #Retrieving Extracted_features from file
@@ -86,9 +87,7 @@ model.add(Dropout(0.5))
 model.add(Dense(2, activation='softmax'))
 
 model.compile(loss='categorical_crossentropy',metrics=['accuracy'],optimizer='adam')
-model.summary()
 
-#earlystop = EarlyStopping(patience=15)
 lr_reduction = ReduceLROnPlateau(monitor = 'val_loss',
                                 patience = 3,
                                 verbose = 1,
@@ -105,7 +104,7 @@ num_batch_size = 32
 keras_file = "Detection_ModelFinal.h5"
 tf.keras.models.save_model(model,keras_file)
 
-
+model.summary()
 
 history = model.fit(X_train,
           y_train,

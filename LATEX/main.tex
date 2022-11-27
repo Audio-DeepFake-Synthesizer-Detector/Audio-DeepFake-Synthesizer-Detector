@@ -111,9 +111,9 @@ Intel dichiara un'accuratezza di individuazione del 96\% e promette di generare 
 Purtroppo questi software non sono stati ancora resi disponibili e risultano impossibili da testare. Per questo motivo nel prossimo capitolo verrà trattato il nostro personale approccio a questa problematica.
 \newpage
 \section{Il nostro modello per il deepfake's audio detection}
-In questo capitolo verrà presentato il nostro modello di individuazione degli audio deepfake basato su une rete neurale convoluzionale. \\
+In questo capitolo verrà presentato il nostro modello di individuazione degli audio deepfake. \\
 Per le motivazioni trattate nel precedente capitolo abbiamo deciso di sviluppare uno strumento che ci permettesse di effettuare test personalizzati approfondendo la problematica da un punto di vista più pratico.\\
-A tal fine abbiamo addestrato una rete neurale convoluzionale. Questa tecnologia emulando il funzionamento del nostro cervello e partendo da una base di dati riesce attraverso diversi livelli a predire un risultato. \\\\
+A tal fine abbiamo addestrato una rete neurale convoluzionale. Questa tecnologia, emulando il funzionamento del nostro cervello e partendo da una base di dati, riesce attraverso diversi livelli a predire un risultato. \\\\
 Per quanto riguarda la base di dati ci siamo affidati ai dataset di ASVspoof per gli audio fake \cite{FakeAudioDataset} e a Common Voice per gli audio genuini \cite{RealAudioDataset}.
 Per poter utilizzare questi file è stato necessario estrarre dagli audio i coefficienti Mel-frequency cestral (rappresentazione spettro di potenza a breve termine di un suono)\\
 
@@ -137,8 +137,30 @@ def features_extractor(file_name):
     \caption{Esempio di spettrogramma MEl e relativo MFCC }
 \end{figure} 
 \newpage
-
 % addestramento rete, parametri importanti, foto risultati e prestazioni ottenute 
+Per il training del modello ci siamo affidati al framework di tensorflow.keras utilizzando una gpu Geforce Rtx 2060. Dopo una serie di test abbiamo constato che l'addestramento sequenziale fosse il più adatto alle nostre esigenze. Infatti, tale metodologia ci ha permesso di sfruttare al meglio le informazioni in nostro possesso ottenendo una maggiore accuratezza e precisione.\\
+Di seguito vengono riportati i parametri che riteniamo essere più rilevanti ed i risultati ottenuti a seguito dell'addestramento della rete. 
+\begin{code}
+\captionof*{code}{Parametri utilizzati nell'addestramento}
+\label{code:python-code}
+\begin{pythoncode}{c}
+model.compile(loss='categorical_crossentropy',metrics=['accuracy'],optimizer='adam')
+lr_reduction = ReduceLROnPlateau(monitor = 'val_loss',patience = 3,verbose = 1,factor = 0.2
+                                ,min_lr = 0.001)
+callbacks = [lr_reduction]
+num_epochs = 50
+num_batch_size = 32
+history = model.fit(X_train,
+          y_train,
+          batch_size=num_batch_size,
+          epochs=num_epochs,
+          validation_data=(X_val, y_val),
+          callbacks=callbacks,
+          verbose=1)
+\end{pythoncode}
+\end{code}
+%Modalità di funzionamento(come fa a capire che un adio è fake o no
+%Foto risultati ottenuti e descrizione caratteristiche e considerazioni finali.
 
 
 \newpage
