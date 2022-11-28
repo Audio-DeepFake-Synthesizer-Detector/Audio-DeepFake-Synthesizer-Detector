@@ -8,6 +8,10 @@
 \usepackage{listings}
 \usepackage[newfloat]{minted}
 \usepackage{caption}
+\usepackage{sidecap}
+\usepackage{amsmath}
+
+
 \newminted{python}{
 \fontsize{9pt}
 %
@@ -106,7 +110,6 @@ Intel dichiara un'accuratezza di individuazione del 96\% e promette di generare 
     \includegraphics[width=1\textwidth]{bloodDetector.png}
     \caption{Partendo da una coppia reale e fake di frame(a) sono stati estratti segnali biologici (c) da diverse regioni facciali (b). Sono state applicate transformazioni (d) per calcolare coerenza spaizale e consistenza temporale, catturando segnali caratteristici(e) in un set di label e PPG maps e utilizzandoli per addestrare modelli di apprendimento SVM (f) e CNN (g). Infine vengono calcolate le probabilità (h) per stabilire l'autenticità dei frame iniziali (a). }
     \label{fig:mesh1}
-
 \end{figure} \\
 Purtroppo questi software non sono stati ancora resi disponibili e risultano impossibili da testare. Per questo motivo nel prossimo capitolo verrà trattato il nostro personale approccio a questa problematica.
 \newpage
@@ -116,9 +119,6 @@ Per le motivazioni trattate nel precedente capitolo abbiamo deciso di sviluppare
 A tal fine abbiamo addestrato una rete neurale convoluzionale. Questa tecnologia, emulando il funzionamento del nostro cervello e partendo da una base di dati, riesce attraverso diversi livelli a predire un risultato. \\\\
 Per quanto riguarda la base di dati ci siamo affidati ai dataset di ASVspoof per gli audio fake \cite{FakeAudioDataset} e a Common Voice per gli audio genuini \cite{RealAudioDataset}.
 Per poter utilizzare questi file è stato necessario estrarre dagli audio i coefficienti Mel-frequency cestral (rappresentazione spettro di potenza a breve termine di un suono)\\
-
-
-
 \begin{code}
 \captionof*{code}{Procedura di estrazione MFCC}
 \label{code:python-code}
@@ -130,16 +130,16 @@ def features_extractor(file_name):
     return mfccs_scaled_features  
 \end{pythoncode}
 \end{code}
-
+% ----------------------------------------------
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.7\textwidth]{librosa-feature-mfcc-1_00.png}
     \caption{Esempio di spettrogramma MEl e relativo MFCC }
 \end{figure} 
-\newpage
-% addestramento rete, parametri importanti, foto risultati e prestazioni ottenute 
+% addestramento rete, parametri importanti, foto risultati e prestazioni ottenute
 Per il training del modello ci siamo affidati al framework di tensorflow.keras utilizzando una gpu Geforce Rtx 2060. Dopo una serie di test abbiamo constato che l'addestramento sequenziale fosse il più adatto alle nostre esigenze. Infatti, tale metodologia ci ha permesso di sfruttare al meglio le informazioni in nostro possesso ottenendo una maggiore accuratezza e precisione.\\
 Di seguito vengono riportati i parametri che riteniamo essere più rilevanti ed i risultati ottenuti a seguito dell'addestramento della rete. 
+% ----------------------------------------------
 \begin{code}
 \captionof*{code}{Parametri utilizzati nell'addestramento}
 \label{code:python-code}
@@ -159,8 +159,25 @@ history = model.fit(X_train,
           verbose=1)
 \end{pythoncode}
 \end{code}
-%Modalità di funzionamento(come fa a capire che un adio è fake o no
+%Modalità di funzionamento(come fa a capire che un audio è fake o no
 %Foto risultati ottenuti e descrizione caratteristiche e considerazioni finali.
+% ----------------------------------------------
+\begin{minipage}{0.4\textwidth}
+\includegraphics[width=\linewidth]{VocalBiologicalTraits.png}
+\end{minipage}
+\begin{minipage}{0.6\textwidth}
+I risultati restituiti si basano sulle divergenze esistenti tra gli audio reali, che sono limitati dalla struttura organica delle corde vocali, e gli audio deepfake \textit{GAN-generated} che non hanno queste limitazioni. Il tratto vocale è composto da vari componenti che agiscono insieme per produrre un suono. I distinti suoni sono articolati in base al percorso dell'aria, che è determinato da come sono posizioni i componenti \cite{280020}.\\
+\end{minipage}
+\\
+In conclusione ci riteniamo soddisfatti dei risultati ottenuti. Abbiamo scelto di rendere diffidente il nostro riconoscitore, in caso non sia certo del risultato predetto, in modo da evitare il più possibile i falsi positivi.\\ 
+Il nostro modello riesce a raggiungere una precisione superiore al 95\% con gli audio appartenenti alla stessa tipologia dei dataset utilizzati durante l'addestramento; mentre ha più difficoltà a riconoscere i deepfake generati con altre tecnologie.\\
+Questa problematica verrà approfondita nel prossimo ed ultimo capitolo.
+\newpage
+\section{Conclusione}
+
+
+
+
 
 
 \newpage
