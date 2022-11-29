@@ -38,7 +38,7 @@
 
 \section{Introduzione}
 %obbiettivo report
-Il seguente report ha come obiettivo l'analisi e lo studio dello stato dell'arte relativo alle tecniche, di cybersicurezza, per stabilire l'autenticità di un audio. \\\\
+Il seguente report ha come obiettivo l'analisi e lo studio dello stato dell'arte relativo alle tecniche, di cybersicurezza, per stabilire l'autenticità di un audio e/o video. \\\\
 %descrizione tecnologie stato dell'arte 
 Tramite l'utilizzo di reti neurali convoluzionali e dell'intelligenza artificiale si è ormai in grado di generare riproduzioni video e/o audio estremamente fedeli alla realtà. Fino a qualche anno fa tali strumenti risultavano essere accessibili solo ad un' "elite" di appassionati e ricercatori con accesso a macchine prestanti e con un'ampia conoscenza dell'argomento. Attualmente, in seguito al boom di queste tecnologie, queste tecniche sono applicabili da chiunque.
 \\\\
@@ -54,6 +54,7 @@ Il documento è diviso in tre sezioni sintetizzati come di seguito:
     \item Che cos'è un deepfake? Problemi nella società moderna
     \item Come individuare un deepfake (casi studio)
     \item Sperimentazione e lavoro svolto
+    \item Conclusioni e considerazioni finali
 \end{enumerate}
 
 
@@ -68,7 +69,7 @@ Il termine deepfake è utilizzato per indicare una riproduzione digitale (foto, 
 La parola deepfake è stata utilizzata per la prima volta nel 2017 da un utente di Reddit per riferirsi al software, da lui utilizzato, per creare filmati che partendo da video esistenti a sfondo sessuale andavano a modificare il volto dell'attrice con quello di una celebrità\cite{OrigineDeepfake}. 
 \\
 \begin{wrapfigure}{l}{0.35\textwidth}
-\includegraphics[width=1\linewidth]{Luke}
+\includegraphics[width=1\linewidth]{img/Luke}
 \caption{Frame del film "The Book of Boba Fett" rappresentante una riproduzione deepfake dell'attore Mark Hamill nelle vesti del giovane Luke Skywalker}
 \label{fig:wrapfig}
 \end{wrapfigure}
@@ -97,7 +98,7 @@ Un celebre esempio è GANs, una rete neurale in grado di riconoscere automaticam
 %Caso di studio(Minerva, Intel, Who are you...)
 Ovviamente anche gli esperti di cybersecurity hanno migliorato i propri sistemi, attraverso nuove tecniche che vanno a concentrarsi su parametri più specifici e precisi che attualmente risultano estremamente complessi da emulare.\\
 \begin{wrapfigure}{l}{0.55 \textwidth}
-\includegraphics[width=1\linewidth]{waveform.png}
+\includegraphics[width=1\linewidth]{img/waveform.png}
 \caption{L'encoder incapsula l'audio del soggetto, il sintetizzatore crea uno spettrogramma perla frase obbiettivo usando l'incapsulamento precedente e il vocoder converte lo spettrogramma nella forma d'onda sintetica.}
 \label{fig2:wrapfig}
 \end{wrapfigure}
@@ -107,7 +108,7 @@ Un'altra interessante tecnologia è quella sviluppata da Intel, in grado di indi
 Intel dichiara un'accuratezza di individuazione del 96\% e promette di generare un risultato in pochi millisecondi, rendendo il servizio utilizzabile anche per l'analisi real-time di un video.\cite{DBLP:journals/corr/abs-1901-02212} \\\\
 \begin{figure}[h]
     \centering
-    \includegraphics[width=1\textwidth]{bloodDetector.png}
+    \includegraphics[width=1\textwidth]{img/bloodDetector.png}
     \caption{Partendo da una coppia reale e fake di frame(a) sono stati estratti segnali biologici (c) da diverse regioni facciali (b). Sono state applicate transformazioni (d) per calcolare coerenza spaizale e consistenza temporale, catturando segnali caratteristici(e) in un set di label e PPG maps e utilizzandoli per addestrare modelli di apprendimento SVM (f) e CNN (g). Infine vengono calcolate le probabilità (h) per stabilire l'autenticità dei frame iniziali (a). }
     \label{fig:mesh1}
 \end{figure} \\
@@ -133,7 +134,7 @@ def features_extractor(file_name):
 % ----------------------------------------------
 \begin{figure}[h]
     \centering
-    \includegraphics[width=0.7\textwidth]{librosa-feature-mfcc-1_00.png}
+    \includegraphics[width=0.7\textwidth]{img/librosa-feature-mfcc-1_00.png}
     \caption{Esempio di spettrogramma MEl e relativo MFCC }
 \end{figure} 
 % addestramento rete, parametri importanti, foto risultati e prestazioni ottenute
@@ -145,8 +146,11 @@ Di seguito vengono riportati i parametri che riteniamo essere più rilevanti ed 
 \label{code:python-code}
 \begin{pythoncode}{c}
 model.compile(loss='categorical_crossentropy',metrics=['accuracy'],optimizer='adam')
-lr_reduction = ReduceLROnPlateau(monitor = 'val_loss',patience = 3,verbose = 1,factor = 0.2
-                                ,min_lr = 0.001)
+lr_reduction = ReduceLROnPlateau(monitor = 'val_loss',
+                                 patience = 3,
+                                 verbose = 1,
+                                 factor = 0.2,
+                                 min_lr = 0.001)
 callbacks = [lr_reduction]
 num_epochs = 50
 num_batch_size = 32
@@ -163,7 +167,7 @@ history = model.fit(X_train,
 %Foto risultati ottenuti e descrizione caratteristiche e considerazioni finali.
 % ----------------------------------------------
 \begin{minipage}{0.4\textwidth}
-\includegraphics[width=\linewidth]{VocalBiologicalTraits.png}
+\includegraphics[width=\linewidth]{img/VocalBiologicalTraits.png}
 \end{minipage}
 \begin{minipage}{0.6\textwidth}
 I risultati restituiti si basano sulle divergenze esistenti tra gli audio reali, che sono limitati dalla struttura organica delle corde vocali, e gli audio deepfake \textit{GAN-generated} che non hanno queste limitazioni. Il tratto vocale è composto da vari componenti che agiscono insieme per produrre un suono. I distinti suoni sono articolati in base al percorso dell'aria, che è determinato da come sono posizioni i componenti \cite{280020}.\\
@@ -173,8 +177,15 @@ In conclusione ci riteniamo soddisfatti dei risultati ottenuti. Abbiamo scelto d
 Il nostro modello riesce a raggiungere una precisione superiore al 95\% con gli audio appartenenti alla stessa tipologia dei dataset utilizzati durante l'addestramento; mentre ha più difficoltà a riconoscere i deepfake generati con altre tecnologie.\\
 Questa problematica verrà approfondita nel prossimo ed ultimo capitolo.
 \newpage
-\section{Conclusione}
-
+\section{Conclusioni}
+%Difficoltà sempre più crescente nel riconoscere deepfake
+%Nostra considerazione al riguardo e ulteriori tematiche sociali e politiche connesse
+%Conclusione con ulteriori esempi di come potrà evolversi questa tecnologia(photoshop e altro)
+Come anticipato nel capitolo precedente i riconoscitori, basati sul ML come il nostro, presentano diverse problematiche.\\
+Come afferma uno studio pubblicato su software engeneering institute \cite{bernaciak_2022} la maggior parte dei deepfake detector, nonostante affermi di avere un accuratezza di oltre il 99\%, di fatto ha un success rate che oscilla tra il 30\% e il 97\%. Le difficoltà principali nell'individuazione dei video deepfake dipendono da diversi fattori come il livello di compressione delle immagini, la loro risoluzione e le caratteristiche del dataset utilizzato durante l'addestramento.\\\\
+Un esperimento condotto congiuntamente dalle università di Berlino e Amsterdam \cite{KOBIS2021103364} dimostra che la maggior parte delle persone intervistate non è assolutamente in grado di riconoscere un deepfake. Inoltre, queste ultime tendono a sovrastimare le proprie capacità di riconoscimento e, se non sicure, vanno a identificare i deepfakes come veri piuttosto che viceversa.\\La non capacità di individuare un deepfake non appare quindi come una mancanza di attenzione o motivazione, ma come una questione di incapacità.\\\\
+Quanto detto, nel prossimo futuro, ci obbligherà a non poterci più fidare dei classici strumenti di comunicazione come video e audio e andrà a minare la nostra capacità di informazione.\\
+Personalmente, pensiamo che una possibile soluzione possa essere raggiunta tramite uno sforzo congiunto di impegno e tecnica. Infatti, a fianco degli ingegneri e dei loro software, è importante che l'intera società impari a sensibilizzarsi sull'argomento; andando a fidarsi solo delle fonti considerate attendibili.\\ In questo modo riusciremo a limitare i lati negativi dei deepfake arrivando infine a coesistere con essi e a beneficiare dei loro aspetti positivi. 
 
 
 
