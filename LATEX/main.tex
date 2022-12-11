@@ -1,7 +1,7 @@
 % LaTeX Template for Project Report, Version 1.0
 
-% Created by: Ernest Mwebaze
-%Revised by: Azamuke Denish
+% Created by: Marco Motamed
+%Revised by: Giorgio Mocci
 
 
 \documentclass[12pt, a4paper]{article}
@@ -46,12 +46,12 @@ Tramite l'utilizzo di reti neurali convoluzionali e dell'intelligenza artificial
 Nonostante queste tecnologie possano essere incredibilmente utili in molti ambiti, ad esempio medico, riabilitativo e sociale, è necessario interrogarsi sui problemi che un utilizzo improprio e scorretto possa causare nella società odierna.\\
 Infatti, è possibile sintetizzare delle riproduzioni accurate senza il consenso dell'interessato andando a rubarne l'identità e utilizzandole per fini criminosi.
 Queste riproduzioni risultano quasi impossibili da distinguere per l'utente comune e necessitano di ausili tecnologici esterni per essere individuate. \\
-Per queste ragioni negli ultimi anni sono nati diversi modelli che, sfruttando il machine learning e l'intelligenza artificiale, permettono di riconoscere e una riproduzione generata artificialmente. 
+Per queste ragioni negli ultimi anni sono nati diversi modelli che, sfruttando il machine learning e l'intelligenza artificiale, permettono di riconoscere una riproduzione generata artificialmente. 
 \\\\
 %Come è strutturato il report
-Il documento è diviso in tre sezioni sintetizzati come di seguito: 
+Il documento è diviso in tre sezioni sintetizzate come di seguito: 
 \begin{enumerate}
-    \item Che cos'è un deepfake? Problemi nella società moderna
+    \item Che cos'è un deepfake? Problemi nella società odierna
     \item Come individuare un deepfake (casi studio)
     \item Sperimentazione e lavoro svolto
     \item Conclusioni e considerazioni finali
@@ -74,14 +74,14 @@ La parola deepfake è stata utilizzata per la prima volta nel 2017 da un utente 
 \label{fig:wrapfig}
 \end{wrapfigure}
 Da allora il termine deepfake si è evoluto e ha anche assunto una parziale accezione positiva. Infatti, grazie a questa tecnologia è possibile creare materiale a supporto di numerosi nobili settori, come ad esempio quello medico, cinematografico ed educativo.\cite{LukeDeepfake}\\
-Un altro esempio rilevante può essere l'assistenza alle persone che, in seguito alla perdita di un proprio caro, possono giovare di queste riproduzioni per aiutarle a superare il loro trauma\cite{SuperareTrauma}.
+Un altro esempio rilevante può essere l'assistenza alle persone che, in seguito alla perdita di un proprio caro, possano giovare di queste riproduzioni per aiutarle a superare il loro trauma\cite{SuperareTrauma}.
 \\\\
 %Problemi sociale correlati al deepfake
-Purtroppo però, la stragrande maggioranza dei deepfake sono utilizzati in maniera dannosa, con lo scopo di screditare un personaggio pubblico, di mortificare e umiliare un individuo (solitamente tramite video pornografici che colpiscono maggiormente target femminili) o deviare l'opinione pubblica verso un determinato obiettivo in maniera similare a quanto avviene con le fakenews.
+Purtroppo però la stragrande maggioranza dei deepfake sono utilizzati in maniera dannosa, con lo scopo di screditare un personaggio pubblico, di mortificare e umiliare un individuo (solitamente tramite video pornografici che colpiscono maggiormente target femminili) o deviare l'opinione pubblica verso un determinato obiettivo in maniera similare a quanto avviene con le fakenews.
 \\
 Un possibile esempio di come questi utilizzi possano diventare di importanza nazionale è quanto accaduto nel 2019 alla allora "house speaker" Nancy Pelosi, dove un video di questo tipo la ritraeva visibilmente alterata come se fosse in preda ai fumi dell'alcol\cite{FakeVideoNancyPelosi}.
 \\\\%conclusione capitolo
-Appare evidente come un utilizzo scorretto di queste tecnologie possa provocare ingenti danni economici e sociali alla collettività. Risulta quindi imperativa una maggiore attenzione da parte del governo e dell'opinione pubblica sull'argomento, al fine di sensibilizzare la popolazione e le aziende del settore in modo da per poter combattere efficacemente questa crescente piaga.
+Appare evidente come un utilizzo scorretto di queste tecnologie possa provocare ingenti danni economici e sociali alla collettività. Risulta quindi imperativa una maggiore attenzione da parte del governo e dell'opinione pubblica sull'argomento, al fine di sensibilizzare la popolazione e le aziende del settore. In questo modo si potrà combattere questa crescente piaga.
 
 
 
@@ -90,21 +90,20 @@ Appare evidente come un utilizzo scorretto di queste tecnologie possa provocare 
 \section{Come possiamo individuare un deepfake?}
 %Tecniche per riconoscerli da un punto di vista umano/sociale
 In questo capitolo verranno trattate le tecniche che possono essere usate per distinguere un video genuino da uno fasullo.\\ La prima categoria riguarda le metodologie basate sul riconoscimento di difetti e pattern comuni ai video deepfake.\\\\
-Ad esempio una caratteristica comune ai suddetti video è la gestione innaturale degli occhi. Infatti, i soggetti sbattono le palpebre troppo spesso o troppo di rado o in casi estremi non le sbattono affatto.\\
+Ad esempio una caratteristica comune ai suddetti video è la gestione innaturale degli occhi. Infatti, i soggetti sbattono le palpebre troppo spesso, troppo di rado o in casi estremi non le sbattono affatto.\\
 Questo e altri simili problemi possono essere utili ad individuare riproduzioni sbrigative o poco curate. Purtroppo quelle di ultima generazione non presentano più queste problematiche ed è quindi necessario affidarsi a strumenti più sofisticati per raggiungere lo scopo.\\\\
 %Tecniche per riconoscerli da un punto di vista scientifico
 Tramite l'utilizzo di tecniche basate su machine learning e intelligenza artificiale è possibile realizzare modelli in grado di individuare, con un certo grado di attendibilità, la maggior parte delle riproduzioni deepfake. Ultimamente, però, sono emerse nuove metodologie in grado di ingannare questi strumenti.\\
-Un celebre esempio è GANs, una rete neurale in grado di riconoscere automaticamente le possibili falle e migliorare la generazione del deepfake attraverso molteplici round, rendendo estremamente difficili l'individuazione da parte di software appositi.\\\\
+Un celebre esempio è GANs, una tipologia di rete neurale in grado di riconoscere automaticamente le possibili falle e migliorare la generazione del deepfake attraverso molteplici round, rendendo estremamente difficili l'individuazione da parte di software appositi.\\\\
 %Caso di studio(Minerva, Intel, Who are you...)
 Ovviamente anche gli esperti di cybersecurity hanno migliorato i propri sistemi, attraverso nuove tecniche che vanno a concentrarsi su parametri più specifici e precisi che attualmente risultano estremamente complessi da emulare.\\
 \begin{wrapfigure}{l}{0.55 \textwidth}
 \includegraphics[width=1\linewidth]{img/waveform.png}
-\caption{L'encoder incapsula l'audio del soggetto, il sintetizzatore crea uno spettrogramma perla frase obbiettivo usando l'incapsulamento precedente e il vocoder converte lo spettrogramma nella forma d'onda sintetica.}
+\caption{L'encoder incapsula l'audio del soggetto, il sintetizzatore crea uno spettrogramma per la frase obiettivo usando l'incapsulamento precedente e il vocoder converte lo spettrogramma nella forma d'onda sintetica.}
 \label{fig2:wrapfig}
 \end{wrapfigure}
-Un esempio virtuoso è il software sviluppato dai ricercatori dell'università della Florida, Gainesville in grado di riconoscere i deepfake audio utilizzando una tecnica basata sull'analisi dell' impronta generata dalle corde vocali \cite{280020}. \\\\\\
-\newpage
-Un'altra interessante tecnologia è quella sviluppata da Intel, in grado di individuare i deepfake video tramite deep-learning e lo studio dei flussi sanguigni attraverso i vasi della testa.\\
+Un esempio virtuoso è il software sviluppato dai ricercatori dell'università della Florida, Gainesville in grado di riconoscere i deepfake audio utilizzando una tecnica basata sull'analisi dell' impronta generata dalle corde vocali \cite{280020}. \\\\\\\\
+Un'altra interessante tecnologia è quella sviluppata da Intel, in grado di individuare i deepfake video tramite deep-learning e lo studio dei flussi sanguigni attraverso i vasi presenti nella testa.\\
 Intel dichiara un'accuratezza di individuazione del 96\% e promette di generare un risultato in pochi millisecondi, rendendo il servizio utilizzabile anche per l'analisi real-time di un video.\cite{DBLP:journals/corr/abs-1901-02212} \\\\
 \begin{figure}[h]
     \centering
@@ -135,7 +134,7 @@ def features_extractor(file_name):
 \begin{figure}[h]
     \centering
     \includegraphics[width=0.7\textwidth]{img/librosa-feature-mfcc-1_00.png}
-    \caption{Esempio di spettrogramma MEl e relativo MFCC }
+    \caption{Esempio di spettrogramma Mel e relativo MFCC }
 \end{figure} 
 % addestramento rete, parametri importanti, foto risultati e prestazioni ottenute
 Per il training del modello ci siamo affidati al framework di tensorflow.keras utilizzando una gpu Geforce Rtx 2060. Dopo una serie di test abbiamo constato che l'addestramento sequenziale fosse il più adatto alle nostre esigenze. Infatti, tale metodologia ci ha permesso di sfruttare al meglio le informazioni in nostro possesso ottenendo una maggiore accuratezza e precisione.\\
@@ -170,7 +169,7 @@ history = model.fit(X_train,
 \includegraphics[width=\linewidth]{img/VocalBiologicalTraits.png}
 \end{minipage}
 \begin{minipage}{0.6\textwidth}
-I risultati restituiti si basano sulle divergenze esistenti tra gli audio reali, che sono limitati dalla struttura organica delle corde vocali, e gli audio deepfake \textit{GAN-generated} che non hanno queste limitazioni. Il tratto vocale è composto da vari componenti che agiscono insieme per produrre un suono. I distinti suoni sono articolati in base al percorso dell'aria, che è determinato da come sono posizioni i componenti \cite{280020}.\\
+I risultati restituiti si basano sulle divergenze esistenti tra gli audio reali, che sono limitati dalla struttura organica delle corde vocali, e gli audio deepfake \textit{GAN-generated} che non hanno queste limitazioni. Il tratto vocale è composto da vari componenti che agiscono insieme per produrre un suono. I distinti suoni sono articolati in base al percorso dell'aria, che è determinato da come sono posizioni i componenti \cite{280020}. Tali tratti non posso essere replicati facilmente da parte di un'intelligenza artificiale.\\
 \end{minipage}
 \\
 In conclusione ci riteniamo soddisfatti dei risultati ottenuti. Abbiamo scelto di rendere diffidente il nostro riconoscitore, in caso non sia certo del risultato predetto, in modo da evitare il più possibile i falsi positivi.\\ 
@@ -184,7 +183,7 @@ Questa problematica verrà approfondita nel prossimo ed ultimo capitolo.
 Come anticipato nel capitolo precedente i riconoscitori, basati sul ML come il nostro, presentano diverse problematiche.\\
 Come afferma uno studio pubblicato su software engeneering institute \cite{bernaciak_2022} la maggior parte dei deepfake detector, nonostante affermi di avere un accuratezza di oltre il 99\%, di fatto ha un success rate che oscilla tra il 30\% e il 97\%. Le difficoltà principali nell'individuazione dei video deepfake dipendono da diversi fattori come il livello di compressione delle immagini, la loro risoluzione e le caratteristiche del dataset utilizzato durante l'addestramento.\\\\
 Un esperimento condotto congiuntamente dalle università di Berlino e Amsterdam \cite{KOBIS2021103364} dimostra che la maggior parte delle persone intervistate non è assolutamente in grado di riconoscere un deepfake. Inoltre, queste ultime tendono a sovrastimare le proprie capacità di riconoscimento e, se non sicure, vanno a identificare i deepfakes come veri piuttosto che viceversa.\\La non capacità di individuare un deepfake non appare quindi come una mancanza di attenzione o motivazione, ma come una questione di incapacità.\\\\
-Quanto detto, nel prossimo futuro, ci obbligherà a non poterci più fidare dei classici strumenti di comunicazione come video e audio e andrà a minare la nostra capacità di informazione.\\
+Quanto detto, nel prossimo futuro, ci obbligherà a non poterci più fidare dei classici strumenti di comunicazione ,come video e audio, e andrà a minare la nostra capacità di informazione.\\
 Personalmente, pensiamo che una possibile soluzione possa essere raggiunta tramite uno sforzo congiunto di impegno e tecnica. Infatti, a fianco degli ingegneri e dei loro software, è importante che l'intera società impari a sensibilizzarsi sull'argomento; andando a fidarsi solo delle fonti considerate attendibili.\\ In questo modo riusciremo a limitare i lati negativi dei deepfake arrivando infine a coesistere con essi e a beneficiare dei loro aspetti positivi. 
 
 
