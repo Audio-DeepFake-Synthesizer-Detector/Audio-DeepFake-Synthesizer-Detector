@@ -23,5 +23,5 @@ Caricare ed utilizzare il modello
 Per quanto riguarda la base di dati ci siamo affidati ai dataset di [ASVspoof](https://www.asvspoof.org/index2021.html) per gli audio fake  e a [Common Voice](https://commonvoice.mozilla.org/it/datasets) per gli audio genuini
 
 ## Credits
--[Giorgio Mocci](https://github.com/giorgio-mocci)
--[Marco Motamed](https://github.com/MotaMarco)
+- [Giorgio Mocci](https://github.com/giorgio-mocci)
+- [Marco Motamed](https://github.com/MotaMarco)
